@@ -1,0 +1,38 @@
+{
+  "name": "TedChenNZ",
+  "version": "1.0.0",
+  "description": "Website for TedChenNZ",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rimraf dist/",
+    "prebuild": "npm run clean -s",
+    "build:dist": "node scripts/dist.js dist/ media/ pages/ index.html",
+    "build:styles": "node scripts/styles.js dist/",
+    "build:scripts": "node scripts/scripts.js dist/",
+    "build": "npm run build:dist && npm run build:styles && npm run build:scripts",
+    "start": "npm run build & npm run serve & npm run live-reload",
+    "serve": "http-server -p 8080 dist/",
+    "live-reload": "live-reload --port 9091 app/",
+    "dev": "node scripts/styles.js app/ & http-server -p 8080 app/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TedChenNZ/tedchennz.me"
+  },
+  "keywords": [
+    "website",
+    "tedchennz",
+    "portfolio",
+    "blog"
+  ],
+  "author": "Ted Chen",
+  "license": "ISC",
+  "dependencies": {
+    "glob": "^4.4.0",
+    "http-server": "^0.7.4",
+    "live-reload": "^0.2.0",
+    "ncp": "^1.0.1",
+    "node-sass": "^2.0.1",
+    "rimraf": "^2.2.8"
+  }
+}
