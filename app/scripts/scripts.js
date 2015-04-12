@@ -1,5 +1,47 @@
-var currentPage;
+var loadProgress = 1;
+var loadTotal = $("main img").length + 2;
 
+function animateLoadStart() {
+    console.log(loadProgress);
+    console.log(loadTotal);
+    $("#ajax-loader").remove();
+    $("body").append("<div id='ajax-loader' style='opacity:1'></div>");
+    loadProgress = 1;
+    loadTotal = $("main img").length + 2;
+    doProgress();
+    
+}
+
+function updateProgress() {
+    loadProgress++;
+    animateLoader((loadProgress/loadTotal*100).toString() + '%');
+}
+
+function doProgress() {
+    $("main img").load(function() {
+        updateProgress();
+    })
+}
+
+function animateLoader(newWidth) {
+    $("#ajax-loader").width(newWidth);
+    if (loadProgress >= loadTotal) {
+        setTimeout(function() {
+            $("#ajax-loader").animate({opacity:0});
+
+            var main_old = $($("main")[0]);
+            var main_new = $($("main")[1]);
+            console.log(main_new);
+            if (!$.isEmptyObject(main_new)) {
+                main_old.fadeOut(500, function() {
+                    $(this).remove();
+                });
+                main_new.fadeIn(500);
+            }
+
+        }, 500);
+    }
+}
 function ajaxLinks() {
     $("a").unbind("click");
     $("a").click(function(e) {
@@ -7,47 +49,51 @@ function ajaxLinks() {
         var href = $(this).attr("href");
         if ($.inArray(href, exclude) == -1) {
             e.preventDefault();
-            changeHash(href);
+            animateLoadStart();
+            if (window.location.pathname != href) {
+                console.log(window.location.pathname);
+                console.log(href);
+                ajaxLoad(href);
+            } else {
+                $("html, body").animate( {scrollTop: 0}, "slow");
+                updateProgress();
+            }
         }
     });
 }
 
-function changeHash(href) {
-    document.location.hash = href;
-    
-    $("#ajax-loader").fadeIn(250);
-    if (currentPage == href) {
-        ajaxLoad(href);
-    }
+function loadPage(data) {
+    var start = data.indexOf("<main>") + 6;
+    var end = data.lastIndexOf("</main>");
+    var mainData = data.substring(start, end);
 
-    currentPage = href;
-}
+    start = data.indexOf("<title>") + 7;
+    end = data.indexOf("</title>");
+    document.title = data.substring(start, end);
 
-function checkHash() {
-    if(window.location.hash) {
-        currentPage = window.location.hash.substring(1);
-        ajaxLoad(currentPage);
-    }
+
+    $("body").append("<main></main>");
+    var main_new = $($("main")[1]);
+    main_new.hide();
+    main_new.append(mainData);
+
+    updateProgress();
 }
 
 function ajaxLoad(href) {
     $.ajax({
         url: href,
-        context: document.body
     }).done(function(data) {
-        var main_old = $("main");
-        $("body").append("<main></main>");
-        var main_new = $($("main")[1]);
-        main_new.hide();
-        main_new.append(data);
-
-        $("#ajax-loader").fadeOut(500);
-        main_old.fadeOut(500, function() {
-            $(this).remove();
-        });
-        main_new.fadeIn(500);
-
+        loadPage(data)
+        window.history.pushState(data,"", href);
     });
+}
+
+function navigateHistory(e) {
+    if (e.state) {
+        animateLoadStart();
+        loadPage(e.state);
+    }
 }
 
 // Hamburger menu show/hide
@@ -66,9 +112,20 @@ function miniMenu() {
                 "margin-left": "0px"
             });
         }
-        $("header").toggleClass("sticky");
+        $("header").addClass("sticky");
         nav.toggleClass("active");
     });
+
+    $("nav li a").click(function(e) {
+        if ($(".menu-icon").is(":visible")) {
+            nav.animate({
+                "margin-left": "-151px"
+            });
+            $("header").toggleClass("sticky");
+            nav.removeClass("active");
+        }
+    });
+
 
     $(window).on("resize", function() {
         if (window.innerWidth >= 600) {

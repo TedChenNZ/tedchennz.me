@@ -26,7 +26,7 @@
 
             </a>
             <ul>
-                <li><a href="/pages/home.html">Home</a></li>
+                <li><a href="/index.html">Home</a></li>
                 <li><a href="/pages/blog.html">Blog</a></li>
                 <li><a href="/pages/projects.html">Projects</a></li>
                 <li><a href="/pages/contact.html">Contact</a></li>
@@ -46,21 +46,19 @@
                 </div>
             </div>
         </div>
+
+        <div class="pane">
+        </div>
         <script>
             // Scripts specific to index page
             pixelStorm();
         </script>
 
     </main>
-    <div id='ajax-loader' style='display: none;'>
-        <span class='ajax-loader-helper'></span>
-        <img src='/media/ajax-loader.gif'>
-    </div>
     <script>
         ajaxLinks();
         miniMenu();
-        window.onhashchange = checkHash;
-        checkHash();
+        window.onpopstate = navigateHistory;
         scrollHeader();
     </script>
 </body>

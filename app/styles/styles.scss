@@ -71,10 +71,12 @@ header.hidden {
             height: 40px;
             background: url('/media/logo_trans.png');
             background-size: 100% 100%;
+            transition:all .15s ease-in-out;
         }
         div:hover {
             background: url('/media/logo.png');
             background-size: 100% 100%;
+            transition:all .15s ease-in-out;
         }
     }
     
@@ -125,6 +127,7 @@ nav {
     width: 0;
     z-index: 10;
     ul {
+        margin-top: 1px;
         list-style: none;
         margin-left: -151px;
         background: $header_bg;
@@ -157,27 +160,30 @@ nav {
     }
 }
 
+// Adapted from http://voidcanvas.com/make-youtube-like-progress-bar-easily-for-your-page/
 #ajax-loader {
-    text-align: center;
-    width: 100%;
-    top: 0;
-    bottom: 0;
+    opacity: 0;
     position: fixed;
-
-    background: rgb(34,34,34); /* IE*/
-    background: rgba(34,34,34,0.75);
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background: $highlight;
+    border-radius: 10%;
+    transition: width 500ms ease-out, opacity 400ms linear;
 }
 
-#ajax-loader img{
-    width: 30px;
-    height: 30px;
-    vertical-align: middle;
-}
-
-.ajax-loader-helper {
-    display: inline-block;
-    height: 100%;
-    vertical-align: middle;
+#ajax-loader:before {
+    position: absolute;
+    content: '';
+    top: 0;
+    opacity: 1;
+    width: 10%;
+    right: 0px;
+    height: 2px;
+    box-shadow: $highlight 1px 0 6px 2px;
+    border-radius: 50%;
 }
 
 @media all and (min-width: 600px) {
@@ -204,7 +210,7 @@ nav {
             display: block;
             text-align: center;
             height: $top-height;
-            margin-left: 0;
+            margin: 0;
             transition: none;
             z-index: 10;
             box-shadow: none;
