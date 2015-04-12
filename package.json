@@ -26,7 +26,7 @@
     "blog"
   ],
   "author": "Ted Chen",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "glob": "^4.4.0",
     "http-server": "^0.7.4",

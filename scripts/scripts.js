@@ -15,7 +15,7 @@ function echo(error, stdout, stderr) {
 
 fs.mkdir(dst + "scripts", echo);
 
-var scripts = []
+var scripts = [];
 glob(src + "scripts/*.js", function (err, files) {
     if (err) {
         console.log(err);
@@ -23,7 +23,7 @@ glob(src + "scripts/*.js", function (err, files) {
         for (var f in files) {
             var source = files[f];
             exec("jshint " + source, echo);
-            scripts.push(source)
+            scripts.push(source);
         }
         exec("uglifyjs " + scripts.join(' ') + " -c -m -r '$,require,exports' -o " + dst + "scripts/scripts.js", echo);
     }
