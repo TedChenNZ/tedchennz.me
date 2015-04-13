@@ -8,7 +8,7 @@ $font-highlight: #333;
 $link: #229999;
 
 $primary: #333;
-$highlight: #800000;
+$highlight: #df6589;
 $faint: rgba(238,238,238,1);
 
 $body_bg: white;
@@ -34,7 +34,12 @@ body {
 a {
     color: $link;
 }
-
+h1 {
+    color: $highlight;
+    font-family: "Amatic SC", cursive;
+    font-weight: 700;
+    font-size: 30px;
+}
 // Adapted from http://voidcanvas.com/make-youtube-like-progress-bar-easily-for-your-page/
 #ajax-loader {
     opacity: 0;
@@ -116,7 +121,7 @@ main {
     width: 100%;
     display: flex;
     flex-direction: column;
-
+    line-height: 1.5;
 }
 
 .menu-icon:hover {
@@ -174,7 +179,7 @@ nav {
         a {
             display: block;
             padding: 10px;
-            width: 100%;
+            width: 130px;
             text-decoration: none;
             color: $header_fg;
 
@@ -238,6 +243,7 @@ nav {
             width: auto;
 
             a {
+                width: auto;
                 text-decoration: none;
                 color: $header_fg;
                 float: left;
@@ -261,10 +267,6 @@ nav {
     }
 
 }
-/* -----------------------------------
-      Home
-   ----------------------------------- */
-
 
 .pane {
     position: relative;
@@ -275,12 +277,19 @@ nav {
     .pane-inner {
         position: relative;
         width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
     }
     .pane-inner-inner {
         position: relative;
+        margin: $top-height auto;
     }
 }
 
+/* -----------------------------------
+      Home
+   ----------------------------------- */
 
 .welcome {
     #pixel-storm {
@@ -290,17 +299,10 @@ nav {
        background-color: white;
     }
     .pane-inner {
-        // background: rgba(0,0,0,0.5);
-        display: flex;
-        flex-direction: row;
         align-items: center;
-        justify-content: center;
-
     }
     .pane-inner-inner {
         text-align: center;
-        margin: $top-height auto;
-        position: relative;
         font-family: "Journal";
         font-size: 30px;
         padding: 0px 30px;
@@ -365,11 +367,186 @@ nav {
     50% { opacity: 0.0; }
 }
 
-.contact {
-    background: #eee;
+.button {
+    border: 2px solid $highlight;
+    color: $highlight;
+    background: transparent;
+    padding: 0.5em 1.5em;
+    cursor:pointer;
+    font-family: "Open Sans";
+    font-size: 16px;
+    transition: all 0.3s;
 
-    .pane-inner {
-        padding: 50px 30px;
+    &:hover, &:focus, &:active {
+        outline: 0;
+        background: $highlight;
+        color: white;
+        transition: all 0.3s;
     }
 }
 
+.material-input {
+    position: relative;
+    margin: 1.5em 0;
+    transition: all 0.3s ease;
+
+    label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 0.6em 0em;
+        transition: all 0.3s;
+        z-index: 1;
+        color: #B8B8B8;
+    }
+
+    .input-text {
+        position: relative;
+        z-index: 10;
+        border: none;
+        border-bottom: $highlight solid 2px;
+        width: 100%;
+        margin: 0.5em 0;
+        background: transparent;
+        transition: all 0.3s ease;
+        box-shadow: none;
+
+        &:focus, &:valid {
+            outline: 0;
+            transition: all 0.3s;
+            box-shadow: 0 2px 2px -2px $highlight;
+        }
+
+        &:focus + label, &:valid + label {
+            top: -1.3em;
+            font-size: 0.8em;
+            transition: all 0.3s;
+            color: $highlight;
+        }
+
+        &:invalid {
+            outline: 0;
+        }
+
+        .textarea-hidden, &[type="text"], &[type="email"] {
+            color: $primary;
+            font-family: "Open Sans", sans-serif;
+            font-size: 16px;
+        }
+    }
+    textarea.input-text {
+        resize: none;
+        overflow: hidden;
+    }
+    .textarea-hidden {
+        display: none;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    textarea.input-text, .textarea-hidden {
+        padding: 0;
+        line-height: 1.5;
+    }
+}
+
+
+
+.contact {
+    $contact-fg: #df6589;
+    $contact-bg: #2f3238;
+    transition: all 0.3s ease;
+
+    color: $contact-fg;
+
+    .pane-inner-inner {
+        min-width: 200px;
+        max-width: 300px;
+        width: 100%;
+    }
+
+    h1 {
+        margin-top: 0.3em;
+        font-size: 80px;
+        font-family: "Amatic SC", "Open Sans", cursive, sans-serif;
+        font-weight: 700;
+        text-align: center;
+    }
+    .contact-form {
+        width: 100%;
+        position: relative;
+        transition: all 0.3s ease;
+        text-align: center;
+    }
+    .material-input {
+        .input-text {
+            border-color: $contact-fg;
+            &:focus, &:valid {
+                box-shadow: 0 2px 2px -2px $contact-fg;
+            }
+
+            &:focus + label, &:valid + label {
+                color: $contact-fg;
+            }
+        }
+    }
+    
+    .button {
+        border-color: $contact-fg;
+        color: $contact-fg;
+
+        &:hover, &:focus, &:active {
+            background: $contact-fg;
+            color: white;
+        }
+    }
+
+}
+
+#curtains {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+
+    .spacers {
+        height: 0;
+        width: 100%;
+    }
+}
+
+.media {
+    .pane-inner {
+        align-items: center;
+
+        .pane-inner-inner {
+            text-align: center;
+            .social-media {
+                margin-top: 2em;
+                img {
+                    margin: 1em;
+                    height: 128px;
+                    width: 128px;
+                    background: transparent;
+                    border: 2px solid $highlight;
+                    transition: all 0.3s;
+                }
+                img:hover {
+                    background: $highlight;
+                    transition: all 0.3s;
+                }
+            }
+        }
+    }
+
+    .b {
+        // background: #eee;
+        background-attachment: fixed;
+    }
+
+    .c {
+        // background: #123456;
+        background-attachment: fixed;
+        // color: white;
+    }
+}

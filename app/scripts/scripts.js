@@ -50,7 +50,13 @@ function ajaxLinks() {
     $("a").click(function(e) {
         var exclude = ["http://", "https://", "#"];
         var href = $(this).attr("href");
-        if ($.inArray(href, exclude) == -1) {
+        var ajax = true;
+        for (i in exclude) {
+            if (href.indexOf(exclude[i]) === 0) {
+                ajax = false;
+            }
+        }
+        if (ajax) {
             e.preventDefault();
             animateLoadStart();
             if (window.location.pathname != href) {
@@ -284,5 +290,19 @@ function pixelStorm(){
 
         ctx.translate(0, canvas.height);
         ctx.scale(1, -1);
+    });
+}
+
+function textareaResizer(textArea, hiddenArea) {
+    var txt = $(textArea);
+    var hiddenDiv = $(hiddenArea);
+    txt.on('keyup', function () {
+        content = $(this).val();
+
+        content = content.replace(/\n/g, '<br>');
+        hiddenDiv.html(content + '<br class="lbr">');
+
+        $(this).css('height', hiddenDiv.height());
+
     });
 }

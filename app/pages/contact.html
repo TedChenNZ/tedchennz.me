@@ -37,12 +37,36 @@
     <main>
         <div class="pane contact">
             <div class="pane-inner">
-                <h1>Contact Me</h1>
-                <p>tedchennz (at) gmail.com</p>
+                <div class="pane-inner-inner">
+                    <h1>Let's Chat</h1>
+                    <form class="contact-form" method="post" action="/scripts/mail.php">
+
+                        <div class="material-input">
+                            <input class="input-text" type="text" name="name" required="required" id="name" />
+                            <label for="name">Enter Your Name</label>
+                        </div>
+
+                        <div class="material-input">
+                            <input class="input-text" type="text" name="email" required="required" id="email" /> <!-- email type won't work with css - input:not(:empty) doesn't work -->
+                            <label for="email">Enter Your Email</label>
+                        </div>
+
+                        <div class="material-input">
+                            <textarea rows="1" class="input-text" type="text" name="message" required="required" id="message"></textarea>
+                            <label for="message">How can I help you?</label>
+                            <div class="textarea-hidden input-text" id="message-hidden"></div>
+                        </div>
+
+                        <input type="submit" class="button" value="Submit">
+                    </form>
+
+                </div>
             </div>
         </div>
 
-
+    <script>
+        textareaResizer("#message", "#message-hidden");
+    </script>
     </main>
     <script>
         ajaxLinks();
