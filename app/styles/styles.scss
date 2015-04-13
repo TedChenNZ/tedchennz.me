@@ -2,23 +2,24 @@
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{border:0;font-size:100%;font:inherit;vertical-align:baseline;margin:0;padding:0}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:none}table{border-collapse:collapse;border-spacing:0}
 
 // Colours
-$main-bg: #fff;
+
 $font-primary: #333;
-$primary: #333;
 $font-highlight: #333;
-$highlight: #800000;
-$faint: rgba(238,238,238,1);
 $link: #229999;
 
-$header_bg: white;
+$primary: #333;
+$highlight: #800000;
+$faint: rgba(238,238,238,1);
 
+$body_bg: white;
+$header_bg: white;
+$header_fg: #333;
 
 // Vars
-$side-width: 80px;
 $top-height: 50px;
 
 
-@import url(http://fonts.googleapis.com/css?family=Open+Sans|Amatic+SC:400,700);
+@import url("http://fonts.googleapis.com/css?family=Open+Sans|Amatic+SC:400,700");
 
 // Extends
 body, html {
@@ -26,13 +27,40 @@ body, html {
 }
 
 body {
-    background: $header_bg;
+    background: $body_bg;
     color: $font-primary;
     font-family: "Open Sans", sans-serif;
 }
 a {
     color: $link;
 }
+
+// Adapted from http://voidcanvas.com/make-youtube-like-progress-bar-easily-for-your-page/
+#ajax-loader {
+    opacity: 0;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background: $highlight;
+    border-radius: 10%;
+    transition: width 500ms ease-out, opacity 400ms linear;
+}
+
+#ajax-loader:before {
+    position: absolute;
+    content: '';
+    top: 0;
+    opacity: 1;
+    width: 50px;
+    right: 0px;
+    height: 2px;
+    box-shadow: $highlight 1px 0 6px 2px;
+    border-radius: 50%;
+}
+
 header {
     background: transparent;
     height: $top-height;
@@ -83,7 +111,6 @@ header.hidden {
 }
 
 main {
-    // padding-left: $side-width;
     min-height: 100%;
     position: absolute;
     width: 100%;
@@ -149,7 +176,7 @@ nav {
             padding: 10px;
             width: 100%;
             text-decoration: none;
-            color: $font-highlight;
+            color: $header_fg;
 
             transition:all .15s ease-in-out;
         }
@@ -158,32 +185,6 @@ nav {
         background: $faint;
         transition:all .15s ease-in-out;
     }
-}
-
-// Adapted from http://voidcanvas.com/make-youtube-like-progress-bar-easily-for-your-page/
-#ajax-loader {
-    opacity: 0;
-    position: fixed;
-    z-index: 1000;
-    top: 0;
-    left: 0;
-    width: 0%;
-    height: 2px;
-    background: $highlight;
-    border-radius: 10%;
-    transition: width 500ms ease-out, opacity 400ms linear;
-}
-
-#ajax-loader:before {
-    position: absolute;
-    content: '';
-    top: 0;
-    opacity: 1;
-    width: 10%;
-    right: 0px;
-    height: 2px;
-    box-shadow: $highlight 1px 0 6px 2px;
-    border-radius: 50%;
 }
 
 @media all and (min-width: 600px) {
@@ -195,8 +196,6 @@ nav {
         top: 0;
         text-align: center;
         height: auto;
-
-
 
         .menu-icon {
             display: none;
@@ -240,7 +239,7 @@ nav {
 
             a {
                 text-decoration: none;
-                color: $font-highlight;
+                color: $header_fg;
                 float: left;
                 height: $top-height - 16px;
                 margin-top: ($top-height - 36)/2;
@@ -251,7 +250,7 @@ nav {
             }
 
             a:hover {
-                border-bottom: 2px solid $font-highlight;
+                border-bottom: 2px solid $header_fg;
                 transition:all .15s ease-in-out;
             }
         }
@@ -276,7 +275,6 @@ nav {
     .pane-inner {
         position: relative;
         width: 100%;
-        display: flex;
     }
     .pane-inner-inner {
         position: relative;
@@ -285,7 +283,6 @@ nav {
 
 
 .welcome {
-    color: $font-primary;
     #pixel-storm {
        width: 100%;
        height: 100%;
@@ -368,6 +365,11 @@ nav {
     50% { opacity: 0.0; }
 }
 
-.software {
+.contact {
+    background: #eee;
+
+    .pane-inner {
+        padding: 50px 30px;
+    }
 }
 

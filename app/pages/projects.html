@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ted Chen | Projects</title>
+    <link rel="stylesheet" href="/styles/styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="/scripts/scripts.js"></script>
+    <script src="http://localhost:9091"></script>
+</head>
+<body>
+    <header>
+        <div id="logo">
+            <a href="/index.html">
+                <div></div>
+            </a>
+        </div>
+        <nav>
+            <a href="#" class="menu-icon">
+                <div class="bar" id="bar1"></div>
+                <div class="bar" id="bar2"></div>
+                <div class="bar" id="bar3"></div>
+
+            </a>
+            <ul>
+                <li><a href="/index.html">Home</a></li>
+                <li><a href="/pages/blog.html">Blog</a></li>
+                <li><a href="/pages/projects.html">Projects</a></li>
+                <li><a href="/pages/contact.html">Contact</a></li>
+            </ul>
+
+        </nav>
+    </header>
+    <main>
+        <div id="curtains" class="projects">
+            <div class="pane a">
+                <div class="pane-inner">
+                    <h1>A</h1>
+                    <p>tedchennz (at) gmail.com</p>
+                </div>
+            </div>
+
+            <div class="spacer"></div>
+
+            <div class="pane b">
+                <div class="pane-inner">
+                    <h1>B</h1>
+                    <p>tedchennz (at) gmail.com</p>
+                </div>
+            </div>
+
+            <div class="spacer"></div>
+            
+            <div class="pane c">
+                <div class="pane-inner">
+                    <h1>C</h1>
+                    <p>tedchennz (at) gmail.com</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+    <script>
+        ajaxLinks();
+        miniMenu();
+        window.onpopstate = navigateHistory;
+        scrollHeader();
+    </script>
+</body>
+</html>

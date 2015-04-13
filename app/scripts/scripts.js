@@ -1,25 +1,28 @@
+/* -----------------------------------
+      Loading
+   ----------------------------------- */
 var loadProgress = 1;
 var loadTotal = $("main img").length + 2;
 
 function animateLoadStart() {
-    console.log(loadProgress);
-    console.log(loadTotal);
     $("#ajax-loader").remove();
-    $("body").append("<div id='ajax-loader' style='opacity:1'></div>");
-    loadProgress = 1;
-    loadTotal = $("main img").length + 2;
-    doProgress();
-    
+    $("body").append("<div id='ajax-loader' style='opacity:1'></div>");    
 }
 
-function updateProgress() {
+function startLoadProgress(total) {
+    loadProgress = 1;
+    loadTotal = total + 2;
+    doLoadProgress();
+}
+
+function updateLoadProgress() {
     loadProgress++;
     animateLoader((loadProgress/loadTotal*100).toString() + '%');
 }
 
-function doProgress() {
+function doLoadProgress() {
     $("main img").load(function() {
-        updateProgress();
+        updateLoadProgress();
     })
 }
 
@@ -28,11 +31,9 @@ function animateLoader(newWidth) {
     if (loadProgress >= loadTotal) {
         setTimeout(function() {
             $("#ajax-loader").animate({opacity:0});
-
-            var main_old = $($("main")[0]);
-            var main_new = $($("main")[1]);
-            console.log(main_new);
-            if (!$.isEmptyObject(main_new)) {
+            if ($("main").length >= 2) {
+                var main_old = $($("main")[0]);
+                var main_new = $($("main")[1]);
                 main_old.fadeOut(500, function() {
                     $(this).remove();
                 });
@@ -42,6 +43,7 @@ function animateLoader(newWidth) {
         }, 500);
     }
 }
+
 function ajaxLinks() {
     $("a").unbind("click");
     $("a").click(function(e) {
@@ -51,33 +53,36 @@ function ajaxLinks() {
             e.preventDefault();
             animateLoadStart();
             if (window.location.pathname != href) {
-                console.log(window.location.pathname);
-                console.log(href);
                 ajaxLoad(href);
             } else {
+                startLoadProgress(0);
                 $("html, body").animate( {scrollTop: 0}, "slow");
-                updateProgress();
+                updateLoadProgress();
             }
         }
     });
 }
 
 function loadPage(data) {
-    var start = data.indexOf("<main>") + 6;
-    var end = data.lastIndexOf("</main>");
-    var mainData = data.substring(start, end);
 
-    start = data.indexOf("<title>") + 7;
-    end = data.indexOf("</title>");
+    // Get and set <title></title>
+    var start = data.indexOf("<title>") + 7;
+    var end = data.indexOf("</title>");
     document.title = data.substring(start, end);
 
-
+    
+    // Get <main></main> and add it to the body
+    start = data.indexOf("<main>") + 6;
+    end = data.lastIndexOf("</main>");
+    var mainData = data.substring(start, end);
     $("body").append("<main></main>");
     var main_new = $($("main")[1]);
     main_new.hide();
     main_new.append(mainData);
 
-    updateProgress();
+    // Start loading
+    startLoadProgress(main_new.children("img").length);
+    updateLoadProgress();
 }
 
 function ajaxLoad(href) {
@@ -96,6 +101,9 @@ function navigateHistory(e) {
     }
 }
 
+/* -----------------------------------
+      Header
+   ----------------------------------- */
 // Hamburger menu show/hide
 function miniMenu() {
     var nav = $("nav ul");
@@ -160,6 +168,9 @@ function scrollHeader() {
     });
 }
 
+/* -----------------------------------
+      Pixel Storm
+   ----------------------------------- */
 // Adapted from http://thecodeplayer.com/walkthrough/html5-canvas-snow-effect
 function pixelStorm(){
     //canvas init
