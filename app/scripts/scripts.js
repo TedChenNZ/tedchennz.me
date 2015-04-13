@@ -38,6 +38,7 @@ function animateLoader(newWidth) {
                     $(this).remove();
                 });
                 main_new.fadeIn(500);
+                $("html, body").animate( {scrollTop: 0}, "slow");
             }
 
         }, 500);
